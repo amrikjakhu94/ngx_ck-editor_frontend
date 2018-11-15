@@ -1,0 +1,8 @@
+<p>
+  Adminhomepage works!
+</p>
+<ckeditor [(ngModel)]="model.editorData" [editor]="Editor"></ckeditor>
+
+<p-button (click)=sendEditorData(model.editorData) icon="pi pi-check" label="Save changes"></p-button>
+<p></p>
+<p-button (click)=resetEditorData() icon="pi pi-check" label="Reset"></p-button>

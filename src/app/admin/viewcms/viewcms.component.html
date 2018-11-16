@@ -1,3 +1,27 @@
-<div [innerHTML]="pagedata.title"></div>
-<div [innerHTML]="pagedata.description"></div>
+<!-- <ul>
+    <li [innerHTML]="pagedata.title">
+    </li>
+    <li [innerHTML]="pagedata.description">
+    </li>
+</ul>
+<br> -->
+<div class="row">
+    <div class="col col-md-4" style="margin:0 auto;">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td [innerHTML]="pagedata.title"></td>
+                    <td [innerHTML]="pagedata.description"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <div [innerHTML]="pagedata.content"></div>

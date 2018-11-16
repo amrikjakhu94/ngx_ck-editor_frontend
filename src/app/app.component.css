@@ -1,5 +1,11 @@
+ul{
+    margin:0 auto;
+}
 ul li{
     float: left;
     display: inline;
     margin-left: 20px;
+}
+ul li a{
+    font-weight: bold;
 }

@@ -1,8 +1,31 @@
-<p>
-  Adminhomepage works!
-</p>
-<ckeditor [(ngModel)]="model.editorData" [editor]="Editor"></ckeditor>
+<a routerLink="/admin/createNewCmsPage">Add new cms page(click here..)</a>
+<hr>
+<div class="row">
+    <div class="col col-md-8" style="margin:0 auto;">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">View</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cmspage of cmspages">
+                    <th scope="row">1</th>
+                    <td>{{ cmspage.title }}</td>
+                    <td><i (click)="viewcmspage(cmspage)" class="material-icons">pageview</i></td>
+                    <td><i (click)="editcmspage(cmspage)" class="material-icons">add_comment</i></td>
+                    <td><i class="material-icons">delete_sweep</i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<br>
+<hr>
 
-<p-button (click)=sendEditorData(model.editorData) icon="pi pi-check" label="Save changes"></p-button>
-<p></p>
-<p-button (click)=resetEditorData() icon="pi pi-check" label="Reset"></p-button>
+<div [innerHtml]="cmspagecontent"></div>
+

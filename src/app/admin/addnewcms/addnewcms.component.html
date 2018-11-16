@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col col-md-12">
+    <form class="form-group" [formGroup]="addNewCmsForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col col-md-6">
+            <input class="form-control" type="text" formControlName="title" name="title" placeholder="Enter page title" required />
+            <hr>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-md-6">
+            <input class="form-control" type="text" formControlName="description" name="description" placeholder="Enter page description" required />
+            <hr>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-md-6">
+          <!-- <input [disabled]="!addNewCmsForm.valid" class="btn btn-primary" type="submit" name="submit" value="Submit" /> -->
+        </div>
+      </div>
+     
+    </form>
+    <div class="row">
+      <div class="col col-md-12">
+        <!-- <ckeditor [(ngModel)]="model.editorData" [editor]="Editor"></ckeditor> -->
+
+        <ck-editor name="editor1" [(ngModel)]="editorValue" skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
+
+        <p-button type="submit" (click)="sendEditorData(addNewCmsForm.value)" [disabled]="!addNewCmsForm.valid" icon="pi pi-check" label="Submit"></p-button>
+        <p></p>
+        <p-button (click)=resetEditorData() icon="pi pi-check" label="Reset"></p-button>
+
+      </div>
+    </div>
+  </div>
+</div>

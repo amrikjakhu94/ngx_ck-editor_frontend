@@ -1,4 +1,9 @@
-<p>
-  Userhomepage works!
-</p>
+<ul>
+  <li *ngFor="let cmspage of cmspages">
+    <a (click)="getcmspage(cmspage)">{{ cmspage.title }}</a>
+  </li>
+</ul>
+<br>
+<hr>
+
 <div [innerHtml]="data"></div>

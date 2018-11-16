@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ApiService } from '../../core/services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-adminhomepage',
@@ -9,34 +10,66 @@ import { ApiService } from '../../core/services/api.service';
 })
 export class AdminhomepageComponent implements OnInit {
   public Editor = ClassicEditor;
-  public model = {
-    editorData: '<p>Hello world!</p>'
-  };
-  sendEditorData(data){
-    console.log(data,'data sent');
-    let content = { content : data };
-    this.apiService.postAdminHomePageData(content,'Homepage').subscribe(
-      res=>{
-        console.log('Data updated successfully.')
-      }
-    )
-  }
-  resetEditorData(){
-    //this.model.editorData = '<p>Hello world!</p>';
-    this.getHomePageData();
-  }
-  constructor(private apiService : ApiService) { }
+  editorData: any;
+  cmspages : any;
+  cmspagecontent : any;
 
-  getHomePageData(){
-    this.apiService.getAdminHomePageData().subscribe(
-      res=>{
-        this.model.editorData = res.content;
-      }
-    )
+  constructor(private apiService : ApiService, 
+    private router: Router) { }
+
+  getAllCmsPages(){
+    // this.apiService.getAllCmspages().subscribe(
+    //   res=>{
+    //     this.cmspages = res;
+    //     console.log(this.cmspages,'aaaa');
+    //     this.apiService.sendCmsData(this.cmspages);
+    //   }
+    // );
+    // // const user = { name : 'amrik', sex : 'M' };
+    // // console.log(this.cmspages,'cccccc');
+   
+    // this.apiService.getCmsData().subscribe(
+    //   resp => {
+    //     console.log(resp,'bbbbb');
+    //   }
+    // );
+  }
+  
+  viewcmspage(data:any){
+    this.apiService.sendCmsData(data);
+    this.router.navigate(['/admin/viewcms']);
+    //console.log('burraahhh');
+    // this.apiService.getCmsPage(data).subscribe(
+    //   res=>{
+    //     console.log(res);
+    //     this.cmspagecontent = res.content;
+    //     //console.log(this.cmspagecontent);
+    //     //this.router.navigateByUrl([]);
+
+    //   }
+    // )
+  }
+
+  editcmspage(data:any){
+    this.apiService.sendCmsData(data);
+    this.router.navigate(['/admin/editcms']);
+
   }
 
   ngOnInit() {
-    this.getHomePageData();
+    // this.getAllCmsPages();
+    this.apiService.getAllCmspages().subscribe(
+      res=>{
+        this.cmspages = res;
+        this.apiService.sendCmsData(this.cmspages);
+      }
+    );
+   
+    // this.apiService.getCmsData().subscribe(
+    //   resp => {
+    //     console.log(resp,'bbbbb');
+    //   }
+    // );
   }
 
 }

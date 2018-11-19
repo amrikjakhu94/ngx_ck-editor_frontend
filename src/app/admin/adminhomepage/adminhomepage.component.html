@@ -13,8 +13,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let cmspage of cmspages">
-                    <th scope="row">1</th>
+                <tr *ngFor="let cmspage of cmspages; let i=index">
+                    <th scope="row">{{i+1}}</th>
                     <td>{{ cmspage.title }}</td>
                     <td><i (click)="viewcmspage(cmspage)" class="material-icons">pageview</i></td>
                     <td><i (click)="editcmspage(cmspage)" class="material-icons">add_comment</i></td>

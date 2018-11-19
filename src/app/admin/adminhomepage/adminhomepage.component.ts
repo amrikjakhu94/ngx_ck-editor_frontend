@@ -34,7 +34,7 @@ export class AdminhomepageComponent implements OnInit {
     // );
     this.apiService.getCmspagesfrompaginate(page,limit).subscribe(
         res=>{
-          // console.log(res,'zzzz');
+          // console.log(res);
           this.cmspages = res.cmspages;
           this.totalRecords = res.totalCount;
           this.apiService.sendCmsData(this.cmspages);
@@ -47,10 +47,6 @@ export class AdminhomepageComponent implements OnInit {
     this.page = event.page+1;
     this.pageCount = event.pageCount;
     this.getCmsPages(this.page,this.limit);
-    //event.first = Index of the first record
-    //event.rows = Number of rows to display in new page
-    //event.page = Index of the new page
-    //event.pageCount = Total number of pages
 }
 
   viewcmspage(data:any){
@@ -79,12 +75,6 @@ export class AdminhomepageComponent implements OnInit {
 
   ngOnInit() {
     this.getCmsPages(this.page,this.limit);
-    // this.apiService.getAllCmspages().subscribe(
-    //   res=>{
-    //     this.cmspages = res;
-    //     this.apiService.sendCmsData(this.cmspages);
-    //   }
-    // );
   }
 
 }

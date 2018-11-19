@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../../core/services/api.service';
+import { ToasterService } from '../../core/services/toaster.service';
 
 @Component({
   selector: 'app-addnewcms',
@@ -22,22 +23,24 @@ export class AddnewcmsComponent implements OnInit {
     ])]
   })
   sendEditorData(data){
-    //console.log(this.editorValue,'data sent');
     let title = data.title;
     let description = data.description;
     let content = this.editorValue;
     let newcmspagedata = { title : title, description : description, content : content }
-    //console.log(newcmspagedata,'yyyyyyyyy');
     this.apiService.postNewCmsPageData(newcmspagedata).subscribe(
       res=>{
-        //console.log('Data updated successfully.');
         console.log(res);
-        this.addNewCmsForm.reset();
+        this.toastrService.showSuccess(res.message,'Success')
+      },
+      error=>{
+        console.log(error);
+        this.toastrService.showError(error.error.message,'Error');
       }
     );
   }
   constructor(private fb: FormBuilder,
-              private apiService : ApiService) { }
+              private apiService : ApiService,
+              private toastrService : ToasterService) { }
 
   onSubmit(){
     let title = this.addNewCmsForm.value.title;
@@ -52,10 +55,6 @@ export class AddnewcmsComponent implements OnInit {
     //     this.addNewCmsForm.reset();
     //   }
     // );
-  }
-
-  resetEditorData(){
-    
   }
 
   ngOnInit() {

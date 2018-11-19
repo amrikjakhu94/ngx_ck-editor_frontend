@@ -24,6 +24,10 @@ export class ApiService {
     return this.http.get(this.link+'/getallcmspages');
   }
 
+  getCmspagesfrompaginate(page : Number,limit : Number):Observable<any>{
+    return this.http.get(this.link+`/getcmspagesfrompaginate/${page}/${limit}`);
+  }
+
   getCmsPage(title: String):Observable<any>{
     return this.http.get(this.link+`/getcmspagefromtitle/${title}`);
   }
@@ -52,5 +56,9 @@ export class ApiService {
     return this.http.get(this.link+'/gethomepagedata');
   }
   
+  deleteCmsPage(id: String):Observable<any>{
+    return this.http.delete(this.link+`/deletecmspage/${id}`);
+  }
+
   constructor(private http : HttpClient){ }
 }

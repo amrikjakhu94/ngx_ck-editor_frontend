@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../core/services/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ToasterService } from '../../core/services/toaster.service';
 
 @Component({
   selector: 'app-editcms',
@@ -23,21 +24,20 @@ export class EditcmsComponent implements OnInit {
   });
 
   sendEditorData(data){
-    //console.log(this.editorValue,'data sent');
     let title = data.title;
     let description = data.description;
     let content = this.editorValue;
     let editcmspagedata = { title : title, description : description, content : content }
-    console.log(editcmspagedata,'yyyyyyyyy');
     this.apiService.postEditCmsPageData(this.page_id,editcmspagedata).subscribe(
       res=>{
-        console.log(res);
+        this.toastrService.showSuccess(res.message,'Success');
       }
     );
   }
 
   constructor(private apiService : ApiService,
-              private fb : FormBuilder) { }
+              private fb : FormBuilder,
+              private toastrService : ToasterService) { }
 
   ngOnInit() {
     this.apiService.getCmsData().subscribe(

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ApiService } from '../../core/services/api.service';
 import { Router } from '@angular/router';
+import { ToasterService } from '../../core/services/toaster.service';
 
 @Component({
   selector: 'app-adminhomepage',
@@ -13,41 +14,48 @@ export class AdminhomepageComponent implements OnInit {
   editorData: any;
   cmspages : any;
   cmspagecontent : any;
+  softdeletecmspage: Object;
+  totalRecords : Number;
+  page : Number = 1;
+  limit : Number = 4;
+  pageCount: Number;
 
   constructor(private apiService : ApiService, 
-    private router: Router) { }
+              private router: Router,
+              private toasterService : ToasterService) { }
 
-  getAllCmsPages(){
+  getCmsPages(page : Number,limit : Number){
     // this.apiService.getAllCmspages().subscribe(
     //   res=>{
     //     this.cmspages = res;
-    //     console.log(this.cmspages,'aaaa');
+    //     this.totalRecords = this.cmspages.length;
     //     this.apiService.sendCmsData(this.cmspages);
     //   }
     // );
-    // // const user = { name : 'amrik', sex : 'M' };
-    // // console.log(this.cmspages,'cccccc');
-   
-    // this.apiService.getCmsData().subscribe(
-    //   resp => {
-    //     console.log(resp,'bbbbb');
-    //   }
-    // );
+    this.apiService.getCmspagesfrompaginate(page,limit).subscribe(
+        res=>{
+          // console.log(res,'iiiii');
+          this.cmspages = res.cmspages;
+          this.totalRecords = res.totalCount;
+          this.apiService.sendCmsData(this.cmspages);
+        }
+      );
   }
   
+  paginate(event) {
+    console.log(event);
+    this.page = event.page+1;
+    this.pageCount = event.pageCount;
+    this.getCmsPages(this.page,this.limit);
+    //event.first = Index of the first record
+    //event.rows = Number of rows to display in new page
+    //event.page = Index of the new page
+    //event.pageCount = Total number of pages
+}
+
   viewcmspage(data:any){
     this.apiService.sendCmsData(data);
     this.router.navigate(['/admin/viewcms']);
-    //console.log('burraahhh');
-    // this.apiService.getCmsPage(data).subscribe(
-    //   res=>{
-    //     console.log(res);
-    //     this.cmspagecontent = res.content;
-    //     //console.log(this.cmspagecontent);
-    //     //this.router.navigateByUrl([]);
-
-    //   }
-    // )
   }
 
   editcmspage(data:any){
@@ -56,21 +64,27 @@ export class AdminhomepageComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-    // this.getAllCmsPages();
-    this.apiService.getAllCmspages().subscribe(
+  deletecmspage(id: String){
+    this.apiService.deleteCmsPage(id).subscribe(
       res=>{
-        this.cmspages = res;
-        this.apiService.sendCmsData(this.cmspages);
+        this.toasterService.showSuccess(res.message,'Success');
+        this.apiService.sendCmsData(res.data);
+        this.getCmsPages(1,4);
+      },
+      error=>{
+        console.log(error);
       }
-    );
-   
-    // this.apiService.getCmsData().subscribe(
-    //   resp => {
-    //     console.log(resp,'bbbbb');
+    )
+  }
+
+  ngOnInit() {
+    this.getCmsPages(this.page,this.limit);
+    // this.apiService.getAllCmspages().subscribe(
+    //   res=>{
+    //     this.cmspages = res;
+    //     this.apiService.sendCmsData(this.cmspages);
     //   }
     // );
   }
 
 }
-// <p><span style="font-size:48px"><strong>Hello</strong></span></p> <div id="101" style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px" title="div1 title"><p>Lorem ipsum new temporary data here</p></div> <p><img alt="" src="https://www.momjunction.com/wp-content/uploads/2015/07/Watermelons-For-Kids-1.jpg" style="height:200px; width:300px" />&nbsp;</p><form action="#" enctype="multipart/form-data" id="form1" method="get" name="form1" target="_blank">    <p><input name="name" required="required" type="text" value="enter name here" /></p>

@@ -50,7 +50,7 @@ export class UserhomepageComponent implements OnInit {
       res=>{
         this.cmspages = res;
         this.data = res[0].content;
-        console.log(this.cmspages,'bbbb');
+        // console.log(this.cmspages,'bbbb');
         this.apiService.sendCmsData(this.cmspages);
       }
     );

@@ -43,7 +43,7 @@ export class AdminhomepageComponent implements OnInit {
   }
   
   paginate(event) {
-    console.log(event);
+    // console.log(event,'event');
     this.page = event.page+1;
     this.pageCount = event.pageCount;
     this.getCmsPages(this.page,this.limit);

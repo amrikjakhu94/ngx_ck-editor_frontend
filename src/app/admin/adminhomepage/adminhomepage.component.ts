@@ -34,7 +34,7 @@ export class AdminhomepageComponent implements OnInit {
     // );
     this.apiService.getCmspagesfrompaginate(page,limit).subscribe(
         res=>{
-          // console.log(res,'iiiii');
+          // console.log(res,'oooii');
           this.cmspages = res.cmspages;
           this.totalRecords = res.totalCount;
           this.apiService.sendCmsData(this.cmspages);

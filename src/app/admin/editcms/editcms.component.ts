@@ -31,6 +31,9 @@ export class EditcmsComponent implements OnInit {
     this.apiService.postEditCmsPageData(this.page_id,editcmspagedata).subscribe(
       res=>{
         this.toastrService.showSuccess(res.message,'Success');
+      },
+      err=>{
+        this.toastrService.showError(err.error.message,'Error');
       }
     );
   }
